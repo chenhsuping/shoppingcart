@@ -1,0 +1,15 @@
+# 環境變數（含密碼，切勿提交）
+.env
+*.env
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 編輯器
+.vscode/
+.idea/
+
+# 日誌
+*.log

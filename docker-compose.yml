@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: postgres:18
+    container_name: shoppingcart-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: shoppingcart
+      POSTGRES_USER: postgres
+      # 正式環境請改用更強的密碼，建議透過 .env 注入
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    ports:
+      - "5432:5432"
+    volumes:
+      # PostgreSQL 18+ 建議掛載 /var/lib/postgresql（而非 .../data）
+      - shoppingcart_pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d shoppingcart"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  shoppingcart_pgdata:
