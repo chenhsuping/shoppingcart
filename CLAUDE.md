@@ -1,39 +1,20 @@
-# CLAUDE.md
+# Shopping Cart 專案規範
 
-Shopping Cart 專案。本檔供 Claude Code 自動載入；完整規格見 [prd.md](prd.md)。
+## 技術棧
+- 後端：Node.js 20 + Express + PostgreSQL
+- 前端：React 18 + Vite + TypeScript
+- 測試：Vitest + Supertest（後端）、Playwright（E2E）
 
-## 專案概觀
+## 命名規範
+- API 路徑：小寫 kebab-case（/api/cart-items）
+- 後端模組：檔名 kebab-case；函式與變數 camelCase
+- React 元件：PascalCase；hooks：use 前綴
 
-開發前請先閱讀 [prd.md](prd.md)。重點摘要：
+## 禁止行為
+- 禁止在 Node.js 程式碼中 hardcode secret key 或直接信任客戶端傳入金額
+- 禁止直接修改 spec.md，需先與人類確認
 
-- **技術棧**：後端 Node.js 20 + Express + PostgreSQL（Docker 啟動）；前端 React + Vite。
-- **核心實體**：Product（商品）、Cart（購物車）、CartItem（購物車明細）。
-- **功能範圍**：瀏覽商品並加入購物車；加入相同商品自動合併數量；數量改為 0 則自動移除；結帳填收件資料後清空購物車。
-
-## 關鍵規則
-
-- **購物車合計一律由伺服器計算，不接受客戶端傳入金額。**
-
-## 目前狀態
-
-> ⚠️ 應用程式碼（後端 / 前端）尚未建立。目前 repo 僅有 PostgreSQL 18 的 Docker 設定。
-
-## 資料庫
-
-PostgreSQL 18 透過 Docker 運行（見 [docker-compose.yml](docker-compose.yml)）。
-
-```bash
-docker compose up -d        # 啟動
-docker compose ps           # 狀態
-docker compose down         # 停止
-```
-
-連線資訊（密碼可於 `.env` 覆寫，見 [.env.example](.env.example)）：
-
-```
-postgresql://postgres:postgres@localhost:5432/shoppingcart
-```
-
-| Host | Port | Database | User |
-|------|------|----------|------|
-| localhost | 5432 | shoppingcart | postgres |
+## 常用指令
+- 啟動後端：`npm run server`
+- 啟動前端：`cd frontend && npm run dev`
+- 執行測試：`npm run test:server`
